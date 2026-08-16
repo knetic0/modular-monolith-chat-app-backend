@@ -1,0 +1,34 @@
+<configuration>
+
+    <appender name="CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} %-5level %logger - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="MONGO"
+              class="com.mehmetsolak.mini_chat_app.common.logging.MongoAppender">
+
+        <uri>mongodb://root:secret@localhost:27017/?authSource=admin</uri>
+        <database>mini-chat-logging-db</database>
+        <collection>application_logs</collection>
+
+    </appender>
+
+    <appender name="ASYNC_MONGO"
+              class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <maxFlushTime>1000</maxFlushTime>
+        <appender-ref ref="MONGO"/>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC_MONGO"/>
+    </root>
+
+</configuration>

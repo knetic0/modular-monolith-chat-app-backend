@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: mini_chat_app
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mini-chat-db
+    username: admin
+    password: secret
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
