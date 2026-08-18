@@ -2,6 +2,7 @@ package com.mehmetsolak.mini_chat_app.common.logging;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
+import com.mongodb.MongoInterruptedException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -27,6 +28,8 @@ public class MongoAppender extends AppenderBase<ILoggingEvent> {
 
     @Override
     protected void append(ILoggingEvent eventObject) {
+        if(!isStarted() || mongoCollection == null) return;
+
         try {
             Document document = new Document()
                     .append("message", eventObject.getFormattedMessage())
@@ -49,6 +52,8 @@ public class MongoAppender extends AppenderBase<ILoggingEvent> {
             }
 
             mongoCollection.insertOne(document);
+        } catch(MongoInterruptedException ignore) {
+            Thread.currentThread().interrupt();
         } catch (Exception e) {
             addError("Error occurred while logging", e);
         }
@@ -56,9 +61,22 @@ public class MongoAppender extends AppenderBase<ILoggingEvent> {
 
     @Override
     public void stop() {
-        if(mongoClient != null) {
-            mongoClient.close();
-        }
+        if(!isStarted() || mongoCollection == null) return;
+
         super.stop();
+
+        if (mongoClient != null) {
+            boolean interrupted = Thread.interrupted();
+
+            try {
+                mongoClient.close();
+            } catch (Exception e) {
+                addError("Error occurred while closing MongoClient", e);
+            } finally {
+                if (interrupted) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
     }
 }
