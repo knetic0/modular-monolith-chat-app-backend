@@ -15,7 +15,7 @@ public class UserCreateService {
     private final UserRepository userRepository;
 
     @EventListener
-    public void handleUserCreatedEvent(UserCreateEvent event) {
+    public void handleUserCreateEvent(UserCreateEvent event) {
         if(userRepository.existsByUsernameOrEmail(event.username(), event.email()))
             throw new UserAlreadyExistsException();
         User user = User.builder()
