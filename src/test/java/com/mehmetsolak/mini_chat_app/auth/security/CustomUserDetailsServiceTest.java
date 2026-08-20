@@ -1,6 +1,5 @@
 package com.mehmetsolak.mini_chat_app.auth.security;
 
-import com.mehmetsolak.mini_chat_app.auth.exceptions.InvalidCredentialsException;
 import com.mehmetsolak.mini_chat_app.user.api.contracts.UserContract;
 import com.mehmetsolak.mini_chat_app.user.api.contracts.dto.UserAuthenticationInfo;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -51,7 +51,7 @@ public class CustomUserDetailsServiceTest {
         when(userContract.getUserAuthenticationInfo("mehmet.solak"))
             .thenReturn(Optional.empty());
 
-        assertThrows(InvalidCredentialsException.class,
+        assertThrows(UsernameNotFoundException.class,
                 () -> customUserDetailsService.loadUserByUsername("mehmet.solak"));
 
         verify(userContract).getUserAuthenticationInfo("mehmet.solak");
