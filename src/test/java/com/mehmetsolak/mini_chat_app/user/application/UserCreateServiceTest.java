@@ -59,7 +59,7 @@ public class UserCreateServiceTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("It must be throw user exists exception when if user exists.")
     public void shouldNotCreateUser_whenUserExists_shouldThrowUserExistsException() {
         UserCreateEvent event = new UserCreateEvent(
                 "mehmet",
