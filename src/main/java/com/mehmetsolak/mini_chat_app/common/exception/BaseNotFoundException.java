@@ -4,7 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class BaseNotFoundException extends BaseException {
-    private final Object[] args;
+    private Object[] args;
+
+    public BaseNotFoundException(String messageKey) {
+        super(messageKey);
+    }
 
     public BaseNotFoundException(String messageKey, Object[] args) {
         super(messageKey);

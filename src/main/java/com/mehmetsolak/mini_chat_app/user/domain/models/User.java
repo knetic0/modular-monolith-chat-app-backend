@@ -36,6 +36,9 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Column
+    private String avatarUrl;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
