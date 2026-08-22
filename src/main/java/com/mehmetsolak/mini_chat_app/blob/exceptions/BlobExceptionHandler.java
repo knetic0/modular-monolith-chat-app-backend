@@ -24,4 +24,15 @@ public class BlobExceptionHandler {
         );
         return ResponseEntity.internalServerError().body(response);
     }
+
+    @ExceptionHandler(FileDeleteException.class)
+    public ResponseEntity<ErrorResponse> handleFileDeleteException() {
+        String message = i18nService.getMessage("blob.fileDelete.exception");
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                message,
+                null
+        );
+        return ResponseEntity.internalServerError().body(response);
+    }
 }

@@ -36,8 +36,11 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column
+    @Column(name = "avatar_url")
     private String avatarUrl;
+
+    @Column(name = "avatar_public_id")
+    private String avatarPublicId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

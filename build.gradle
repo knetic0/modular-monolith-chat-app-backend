@@ -34,6 +34,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-database-postgresql'
     implementation 'org.mongodb:mongodb-driver-sync'
     implementation 'org.springframework.boot:spring-boot-starter-restclient'
+    implementation 'com.cloudinary:cloudinary-http5:2.0.0'
     runtimeOnly 'org.postgresql:postgresql'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

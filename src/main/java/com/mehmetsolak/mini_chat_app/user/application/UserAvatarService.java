@@ -1,6 +1,7 @@
 package com.mehmetsolak.mini_chat_app.user.application;
 
 import com.mehmetsolak.mini_chat_app.blob.api.contracts.BlobContract;
+import com.mehmetsolak.mini_chat_app.blob.api.contracts.dto.BlobContractResponse;
 import com.mehmetsolak.mini_chat_app.user.domain.exceptions.UserNotFoundException;
 import com.mehmetsolak.mini_chat_app.user.domain.models.User;
 import com.mehmetsolak.mini_chat_app.user.infrastructure.UserRepository;
@@ -22,12 +23,13 @@ public class UserAvatarService {
     public void upload(MultipartFile avatar, UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
-        String oldAvatarUrl = user.getAvatarUrl();
-        String newAvatarUrl = blobContract.uploadAvatar(avatar);
-        user.setAvatarUrl(newAvatarUrl);
+        String oldAvatarPublicId = user.getAvatarPublicId();
+        BlobContractResponse uploaded = blobContract.uploadAvatar(avatar);
+        user.setAvatarUrl(uploaded.url());
+        user.setAvatarPublicId(uploaded.publicId());
         userRepository.save(user);
-        if(oldAvatarUrl != null) {
-
+        if(oldAvatarPublicId != null) {
+            blobContract.delete(oldAvatarPublicId);
         }
     }
 }
