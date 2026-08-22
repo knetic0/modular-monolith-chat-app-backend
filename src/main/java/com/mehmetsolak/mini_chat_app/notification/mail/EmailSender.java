@@ -1,6 +1,6 @@
 package com.mehmetsolak.mini_chat_app.notification.mail;
 
-import com.mehmetsolak.mini_chat_app.common.event.UserCreateEvent;
+import com.mehmetsolak.mini_chat_app.common.event.UserCreatedEvent;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class EmailSender {
 
     @Async
     @EventListener
-    public void onUserCreate(UserCreateEvent event) {
+    public void onUserCreate(UserCreatedEvent event) {
         String subject = "Welcome!";
         String htmlBody = """
                 <h2>Welcome, %s!</h2>
