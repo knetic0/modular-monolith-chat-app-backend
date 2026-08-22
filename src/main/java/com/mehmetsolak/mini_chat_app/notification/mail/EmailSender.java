@@ -23,7 +23,7 @@ public class EmailSender {
         String htmlBody = """
                 <h2>Welcome, %s!</h2>
                 <p>Your account created.</p>
-                """.formatted(event.firstName() + event.lastName());
+                """.formatted(event.firstName() + " " + event.lastName());
 
         try {
             send(event.email(), subject, htmlBody);
