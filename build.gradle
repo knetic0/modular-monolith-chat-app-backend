@@ -36,6 +36,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-restclient'
     implementation 'com.cloudinary:cloudinary-http5:2.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'com.bucket4j:bucket4j_jdk17-core:8.19.0'
     runtimeOnly 'org.postgresql:postgresql'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
