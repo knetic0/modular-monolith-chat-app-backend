@@ -36,9 +36,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BaseConflictException.class)
     public ResponseEntity<ErrorResponse> handleBaseConflictException(BaseConflictException exception) {
-        String message = i18nService.getMessage(exception.getMessage(), exception.getArgs());
+        String message = i18nService.getMessage(exception.getMessageKey(), exception.getArgs());
         ErrorResponse error =
                 new ErrorResponse(HttpStatus.CONFLICT.value(), message, null);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    @ExceptionHandler(BaseNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleBaseNotFoundException(BaseNotFoundException exception) {
+        String message = i18nService.getMessage(exception.getMessageKey());
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), message, null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
